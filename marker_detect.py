@@ -9,6 +9,12 @@ mtx = np.array([[1.1551e+03, 0, 5.457e+02],
                 [0, 1.1509e+03, 7.174e+02],
                 [0, 0, 1]])  # calibrate result
 dist = np.array([3.932e-1, -2.104, -3.6e-3, 1.9e-3, 3.1098])
+# calculated from Matlab
+# mtx = np.array([[6.204675e+02, 0, 3.601938e+02],
+#                [0, 6.19458e+02, 2.450647e+02],
+#                [0, 0, 1]])  # calibrate result
+# dist = np.array([1.043e-01, -1.524e-01, 1.3e-3, 1e-3, -1.15e-01])
+
 source = 1  # "http://ZDRM:12345678@10.209.31.55:8081" #0 or 1 for usb webcam
 cap = cv.VideoCapture(source)
 font = cv.FONT_HERSHEY_SIMPLEX
@@ -20,7 +26,8 @@ print("press q to quit.")
 while True:
     ret, frame = cap.read()
     new_mtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist,
-                                                (640, 480), 1, (640, 480))
+                                                frame.shape[:2],
+                                                1, frame.shape[:2])
     dst = cv.undistort(frame, mtx, dist, None, new_mtx)
     gray = cv.cvtColor(dst, cv.COLOR_BGR2GRAY)
     corners, ids, rejectedImgPoints = aruco.detectMarkers(gray,
@@ -32,7 +39,7 @@ while True:
             pos = (int(sum([j[0] for j in i[0]])/4),
                    int(sum([k[1] for k in i[0]])//4))
             txt_pos = pos[0], pos[1] - 20
-            cv.circle(dst, pos, 1, (0, 0,255), -1)
+            cv.circle(dst, pos, 1, (0, 0, 255), -1)
             cv.putText(dst, '{}'.format(pos), txt_pos, font, 0.3, (0, 255, 0))
             # print(pos)
 

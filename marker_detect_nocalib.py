@@ -5,10 +5,10 @@ from cv2 import aruco
 
 # ################### INITIALIZING ############################################
 # rt, mtx, dist, cam_rvecs, cam_tvecs = cam_calib()  #to run calibration
-mtx = np.array([[1.1551e+03, 0, 5.457e+02],
-                [0, 1.1509e+03, 7.174e+02],
-                [0, 0, 1]])  # calibrate result
-dist = np.array([3.932e-1, -2.104, -3.6e-3, 1.9e-3, 3.1098])
+# mtx = np.array([[1.1551e+03, 0, 5.457e+02],
+#                 [0, 1.1509e+03, 7.174e+02],
+#                [0, 0, 1]])  # calibrate result
+# dist = np.array([3.932e-1, -2.104, -3.6e-3, 1.9e-3, 3.1098])
 source = 1  # "http://ZDRM:12345678@10.209.31.55:8081" #0 or 1 for usb webcam
 cap = cv.VideoCapture(source)
 font = cv.FONT_HERSHEY_SIMPLEX
@@ -19,9 +19,9 @@ while not cap:
 print("press q to quit.")
 while True:
     ret, frame = cap.read()
-    new_mtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist,
-                                                (640, 480), 1, (640, 480))
-    dst = cv.undistort(frame, mtx, dist, None, new_mtx)
+    # new_mtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist,
+    #                                            (640, 480), 1, (640, 480))
+    # dst = cv.undistort(frame, mtx, dist, None, new_mtx)
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     corners, ids, rejectedImgPoints = aruco.detectMarkers(gray,
                                                           aruco_dict,
@@ -36,13 +36,13 @@ while True:
             cv.putText(frame, '{}'.format(pos), txt_pos, font, 0.3, (0, 255, 0))
             # print(i, "is at", pos)
 
-        rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(corners,
-                                                          0.05, mtx, dist)
+        # rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(corners,
+        #                                                  0.05, mtx, dist)
         # for i in range(len(ids)):
         #    aruco.drawAxis(dst, mtx, dist, rvecs[i], tvecs[i], 0.05)
     # cv.namedWindow('dst', 0)
     # cv.imshow("orig", frame)
-    imS = cv.resize(frame, (960, 540))
+    imS = cv.resize(frame, (320, 240))
     cv.imshow("dst", imS)
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
