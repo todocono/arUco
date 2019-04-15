@@ -27,14 +27,25 @@ while True:
                                                           aruco_dict,
                                                           parameters=params)
     if ids is not None:
+        print("we found: ")
+        for n in range(len(ids)):
+            print(str(ids[n]) + " at " + str(corners[n][0][0]) +
+                  " with distance ")
+            # here I can calculate distances and populate a matrix
+            # here I can tx via radio
+
+        # this is only for debugging
         aruco.drawDetectedMarkers(frame, corners, ids, (0, 0, 255))
+
         for i in corners:
             pos = (int(sum([j[0] for j in i[0]])/4),
                    int(sum([k[1] for k in i[0]])//4))
             txt_pos = pos[0], pos[1] - 20
-            cv.circle(frame, pos, 1, (0, 0, 255), -1)
-            cv.putText(frame, '{}'.format(pos), txt_pos, font, 0.3, (0, 255, 0))
-            # print(i, "is at", pos)
+            cv.circle(frame, pos, 1, (0, 0, 255), -1)  # BGR color (red)
+            cv.putText(frame, '{}'.format(pos),
+                       txt_pos, font, 0.3, (0, 255, 0))  # BGR color (green)
+            #for n in range(len(ids)):
+                # print(str(ids[n])+" at "+str(pos[0])+" ")
 
         # rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(corners,
         #                                                  0.05, mtx, dist)
@@ -42,7 +53,7 @@ while True:
         #    aruco.drawAxis(dst, mtx, dist, rvecs[i], tvecs[i], 0.05)
     # cv.namedWindow('dst', 0)
     # cv.imshow("orig", frame)
-    imS = cv.resize(frame, (320, 240))
+    imS = cv.resize(frame, (640, 480))
     cv.imshow("dst", imS)
     if cv.waitKey(1) & 0xFF == ord('q'):
         break

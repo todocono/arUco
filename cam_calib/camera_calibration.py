@@ -26,7 +26,7 @@ def cam_calib():
     # prepare cv2 world coordinate as standard base.
     objp = np.zeros((w*h,3), np.float32)
     objp[:, :2] = np.mgrid[0:w, 0:h].T.reshape(-1, 2)
-    # objp = objp * 22  # height and width of chessboard is 22mm
+    objp = objp * 22  # height and width of chessboard is 22mm
     obj_point = []  # 3d point in real world space
     img_point = []  # 2d points in image plane.
 
@@ -41,7 +41,7 @@ def cam_calib():
         #     cv.destroyAllWindows()
         #     break
         ret, corners = cv.findChessboardCorners(gray, (w, h), None)
-        if ret == True:
+        if ret:
             # print(pic)
             # plt.imread()
             # cv.namedWindow('img',0)
