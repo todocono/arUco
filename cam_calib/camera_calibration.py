@@ -48,10 +48,10 @@ def cam_calib():
             obj_point.append(objp)
             corner2 = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
             img_point.append(corner2)
-            cv.drawChessboardCorners(img, (w, h), corner2, ret)  # show corners
-            cv.imshow('img', img)
-            cv.waitKey(500)
-            cv.destroyAllWindows()
+            # cv.drawChessboardCorners(img, (w, h), corner2, ret)  # show corners
+            # cv.imshow('img', img)
+            # cv.waitKey(500)
+            # cv.destroyAllWindows()
     return cv.calibrateCamera(obj_point, img_point, gray.shape[::-1],
                               None, None)
 
