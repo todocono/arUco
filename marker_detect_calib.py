@@ -19,9 +19,8 @@ while not cap:
 print("press q to quit.")
 while True:
     ret, frame = cap.read()
-    new_mtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist,
-                                                frame.shape[:2], 1,
-                                                frame.shape[:2])
+    h,w = frame.shape[:2]
+    new_mtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
     dst = cv.undistort(frame, mtx, dist, None, new_mtx)
     gray = cv.cvtColor(dst, cv.COLOR_BGR2GRAY)
     corners, ids, rejectedImgPoints = aruco.detectMarkers(gray,

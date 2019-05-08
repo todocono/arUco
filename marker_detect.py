@@ -15,7 +15,7 @@ rt, mtx, dist, cam_rvecs, cam_tvecs = cam_calib()  #to run calibration
 #                [0, 0, 1]])  # calibrate result
 # dist = np.array([1.043e-01, -1.524e-01, 1.3e-3, 1e-3, -1.15e-01])
 
-source = 0  # "http://ZDRM:12345678@10.209.31.55:8081" #0 or 1 for usb webcam
+source = 1  # "http://ZDRM:12345678@10.209.31.55:8081" #0 or 1 for usb webcam
 cap = cv.VideoCapture(source)
 font = cv.FONT_HERSHEY_SIMPLEX
 aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
